@@ -1,0 +1,118 @@
+// =============================================================
+// SCRIPT XEM SHARE CARD — paste vào F12 Console
+// Cần: app đang chạy (localhost hoặc vercel) + bất kỳ trang nào
+// Tự động seed persona + navigate tới /result + mở ShareSheet
+// =============================================================
+
+(async () => {
+
+  // ── BƯỚC 1: SEED PERSONA ĐẦY ĐỦ ─────────────────────────
+  console.log('🌱 Seeding test persona...')
+
+  const testResult = {
+    // MBTI
+    mbtiType: 'INTJ',
+    identity: 'A',
+    pcc: { EI: 78, SN: 72, TF: 65, JP: 80 },
+    completedAt: new Date().toISOString(),
+
+    // Tâm linh
+    fullName: 'Nguyễn Văn An',
+    birthDate: '15/08/1995',
+    birthHour: 'Dần',
+    lunarYear: 1995,
+    canYear: 'Ất',
+    chiYear: 'Hợi',
+    nhatChu: 'Giáp',
+    element: 'Mộc',
+    cungMenh: 'Tốn',
+    lifePath: 7,
+  }
+
+  // Lưu vào localStorage (key theo app)
+  localStorage.setItem('mbtiquiz_result', JSON.stringify(testResult))
+  console.log('✅ Persona INTJ-A · Giáp Mộc · LP7 đã seed')
+
+  // ── BƯỚC 2: NAVIGATE TỚI /result ─────────────────────────
+  console.log('🔄 Chuyển sang /result...')
+
+  if (window.location.pathname !== '/result') {
+    window.location.href = '/result'
+    console.log('⏳ Đang chuyển trang... paste lại script sau khi trang load xong')
+    return
+  }
+
+  // ── BƯỚC 3: ĐỢI TRANG RENDER XONG ────────────────────────
+  console.log('⏳ Chờ trang render...')
+  await new Promise(r => setTimeout(r, 1500))
+
+  // ── BƯỚC 4: MỞ SHARE SHEET ───────────────────────────────
+  console.log('📤 Tìm nút Share...')
+
+  // Tìm nút share (thử nhiều selector phổ biến)
+  const shareBtn =
+    document.querySelector('[data-testid="share-btn"]') ||
+    document.querySelector('button[aria-label*="share" i]') ||
+    document.querySelector('button[aria-label*="chia sẻ" i]') ||
+    [...document.querySelectorAll('button')].find(b =>
+      b.textContent?.toLowerCase().includes('chia sẻ') ||
+      b.textContent?.toLowerCase().includes('share')
+    )
+
+  if (shareBtn) {
+    console.log('✅ Tìm thấy nút share — đang click...')
+    shareBtn.click()
+    await new Promise(r => setTimeout(r, 800))
+    console.log('🎉 ShareSheet đã mở! Xem card trên màn hình.')
+  } else {
+    console.log('⚠️ Không tìm thấy nút share tự động.')
+    console.log('👉 Trang /result đã load — tự click nút chia sẻ trên UI.')
+  }
+
+  // ── THÔNG TIN PERSONA ĐÃ SEED ─────────────────────────────
+  console.log('\n📋 Persona đã seed:')
+  console.table({
+    'MBTI': 'INTJ-A',
+    'Nhật chủ': 'Giáp',
+    'Ngũ hành': 'Mộc',
+    'Life Path': 7,
+    'Background': 'bg-giap-moc.webp',
+    'Nickname': 'Người hoạch định chiến lược',
+  })
+
+  console.log('\n💡 Muốn thử type khác? Gọi:')
+  console.log("   quickSeed('ENFP', 'Dinh', 'Hoa', 3)")
+
+})()
+
+// ── HELPER: ĐỔI TYPE NHANH ────────────────────────────────────
+// Gọi từ console để test type/tâm linh khác nhau
+window.quickSeed = function(mbtiType = 'INFJ', nhatChu = 'Nham', element = 'Thuy', lifePath = 9) {
+  const result = {
+    mbtiType,
+    identity: 'A',
+    pcc: { EI: 70, SN: 68, TF: 60, JP: 75 },
+    completedAt: new Date().toISOString(),
+    fullName: 'Test User',
+    birthDate: '01/01/1990',
+    birthHour: 'Tý',
+    nhatChu,
+    element,
+    lifePath,
+    canYear: 'Canh',
+    chiYear: 'Ngọ',
+    lunarYear: 1990,
+  }
+  localStorage.setItem('mbtiquiz_result', JSON.stringify(result))
+  console.log(`✅ Seed ${mbtiType}-A · ${nhatChu} ${element} · LP${lifePath}`)
+  console.log('🔄 Reload trang để thấy kết quả mới...')
+  window.location.reload()
+}
+
+// ── QUICK SEEDS PHỔ BIẾN ──────────────────────────────────────
+// window.quickSeed('INTJ', 'Giap', 'Moc', 7)   → Giáp Mộc LP7
+// window.quickSeed('ENFP', 'Dinh', 'Hoa', 3)   → Đinh Hỏa LP3
+// window.quickSeed('ISFJ', 'Quy', 'Thuy', 2)   → Quý Thủy LP2
+// window.quickSeed('ESTP', 'Canh', 'Kim', 5)   → Canh Kim LP5
+// window.quickSeed('INFP', 'At', 'Moc', 9)     → Ất Mộc LP9
+// window.quickSeed('ESFP', 'Binh', 'Hoa', 6)   → Bính Hỏa LP6

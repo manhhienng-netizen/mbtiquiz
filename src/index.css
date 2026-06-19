@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@keyframes figIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes questionIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-up-sheet {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up-toast {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up-sheet {
+  animation: slide-up-sheet 0.28s ease-out;
+}
+
+.animate-slide-up-toast {
+  animation: slide-up-toast 0.25s ease-out;
+}
+
+@keyframes starPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    r: 1.5;
+  }
+  50% {
+    opacity: 0.85;
+    r: 2.2;
+  }
+}
+
+@keyframes starPulseLarge {
+  0%,
+  100% {
+    opacity: 0.55;
+    r: 2.5;
+  }
+  50% {
+    opacity: 1;
+    r: 3.2;
+  }
+}
+
+.star-pulse-0 {
+  animation: starPulse 2.8s ease-in-out infinite;
+  animation-delay: 0s;
+}
+.star-pulse-1 {
+  animation: starPulse 3.2s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+.star-pulse-2 {
+  animation: starPulse 2.5s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+.star-pulse-3 {
+  animation: starPulse 3.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+.star-pulse-4 {
+  animation: starPulse 2.9s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+.star-pulse-5 {
+  animation: starPulse 3.1s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+.star-pulse-6 {
+  animation: starPulse 2.6s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+.star-pulse-7 {
+  animation: starPulse 3.4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+.star-pulse-8 {
+  animation: starPulse 2.7s ease-in-out infinite;
+  animation-delay: 1.8s;
+}
+
+.star-pulse-large {
+  animation: starPulseLarge 3s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+
+.reveal-delay-1 {
+  transition-delay: 150ms;
+}
+.reveal-delay-2 {
+  transition-delay: 300ms;
+}
